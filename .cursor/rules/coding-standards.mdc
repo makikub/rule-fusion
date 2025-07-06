@@ -1,0 +1,31 @@
+# TypeScript コーディング標準
+
+## 基本ルール
+- インデント: 2スペース
+- セミコロン: 必須
+- 最大行長: 100文字
+- 命名規則: camelCase（変数・関数）、PascalCase（クラス・インターフェース）
+
+## 型定義
+- 明示的な型注釈を推奨
+- `any`型の使用は最小限に
+- インターフェースは[src/types/config.ts](mdc:src/types/config.ts)に集約
+
+## エラーハンドリング
+- try-catch文で適切なエラーメッセージを提供
+- エラーオブジェクトには詳細な情報を含める
+- [src/engines/static-engine.ts](mdc:src/engines/static-engine.ts)のエラーハンドリングを参考
+
+## テスト
+- 各コンポーネントに対応するテストファイルを作成
+- [src/__tests__/](mdc:src/__tests__/)ディレクトリに配置
+- Jest + ts-jestを使用
+
+## 依存関係
+- [package.json](mdc:package.json)で管理
+- Node.js 20+を要求
+- 外部ライブラリは必要最小限に
+description:
+globs:
+alwaysApply: false
+---

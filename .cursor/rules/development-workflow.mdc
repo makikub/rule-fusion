@@ -1,0 +1,52 @@
+# 開発ワークフローガイド
+
+## 開発環境セットアップ
+```bash
+npm install          # 依存関係インストール
+npm run build        # TypeScriptコンパイル
+npm run dev          # 開発モード実行
+```
+
+## テスト実行
+```bash
+npm test             # Jestテスト実行
+npm run lint         # ESLint実行
+```
+
+## ビルドとパッケージング
+```bash
+npm run build        # dist/ディレクトリにコンパイル
+npm run clean        # dist/ディレクトリ削除
+```
+
+## ファイル構造
+- [src/](mdc:src/) - メインソースコード
+- [src/__tests__/](mdc:src/__tests__/) - テストファイル
+- [dist/](mdc:dist/) - コンパイル済みファイル（生成）
+- [examples/](mdc:examples/) - サンプルとドキュメント
+
+## テスト戦略
+- 各コンポーネントの単体テスト
+- 統合テスト（エンドツーエンド）
+- パフォーマンステスト（1kファイル/30秒要件）
+
+## 現在のテスト状況
+- [src/__tests__/config-parser.test.ts](mdc:src/__tests__/config-parser.test.ts) - 設定パーサー
+- [src/__tests__/static-engine.test.ts](mdc:src/__tests__/static-engine.test.ts) - 静的エンジン
+- **不足**: FileDetector、FileParser、ConsoleReporterのテスト
+
+## 品質保証
+- TypeScript型チェック
+- ESLintによるコード品質
+- Jestによるテストカバレッジ
+- パフォーマンスベンチマーク
+
+## リリース準備
+- [package.json](mdc:package.json)のバージョン更新
+- [README.md](mdc:README.md)の更新
+- テストの全通過確認
+- パフォーマンス要件の検証
+description:
+globs:
+alwaysApply: false
+---

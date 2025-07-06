@@ -1,0 +1,16 @@
+coding-style:
+  indent: 2
+  max-line-length: 120
+  use-semicolons: true
+
+language-preferences:
+  typescript: true
+  javascript: false
+
+naming-conventions:
+  camelCase: true
+  PascalCase: false
+
+dependencies:
+  - lodash
+  - express

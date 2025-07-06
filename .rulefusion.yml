@@ -1,0 +1,27 @@
+tools:
+  copilot:
+    include: [".copilot/**/*.yml", ".copilot/**/*.yaml", ".github/copilot-instructions.md", "examples/.copilot/**/*.yml"]
+  cursor:
+    include: [".cursor/**/*.md", ".cursorrules", "examples/.cursor/**/*.md"]
+  claude:
+    include: [".claude/**/*.yml", ".claude/**/*.yaml", "CLAUDE.md", "examples/CLAUDE.md"]
+
+exclude:
+  - "node_modules/**"
+  - "dist/**"
+  - "build/**"
+
+rules:
+  duplicate-key: error
+  undefined-ref: error
+  priority-cycle: error
+  range-conflict: warning
+
+ai:
+  enabled: false
+  provider: openai
+  model: gpt-4o-mini
+
+bestPractices:
+  enabled: false
+  catalogs: [".rulefusion-practices/**/*.yml"]

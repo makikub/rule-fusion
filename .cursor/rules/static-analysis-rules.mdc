@@ -1,0 +1,44 @@
+# 静的解析ルール実装ガイド
+
+## 実装済みルール
+[src/engines/static-engine.ts](mdc:src/engines/static-engine.ts)に以下の4つのルールが実装済み：
+
+### 1. duplicate-key
+- 異なるツール間での重複キー検出
+- `checkDuplicateKeys()`メソッドで実装
+- 設定: `rules['duplicate-key']`
+
+### 2. undefined-ref
+- 未定義参照の検出（`${variable}`形式）
+- `checkUndefinedReferences()`メソッドで実装
+- 設定: `rules['undefined-ref']`
+
+### 3. priority-cycle
+- 優先度循環依存の検出
+- `checkPriorityCycles()`メソッドで実装
+- 設定: `rules['priority-cycle']`
+
+### 4. range-conflict
+- 数値範囲の競合検出
+- `checkRangeConflicts()`メソッドで実装
+- 設定: `rules['range-conflict']`
+
+## 新しいルールの追加方法
+1. `StaticEngine`クラスに新しいチェックメソッドを追加
+2. `analyze()`メソッドで呼び出し
+3. [src/types/config.ts](mdc:src/types/config.ts)の`RuleFusionConfig.rules`に追加
+4. 対応するテストを作成
+
+## ルールレベル
+- `error`: 解析を失敗させる
+- `warning`: 警告として表示
+- `off`: ルールを無効化
+
+## パフォーマンス要件
+- 1kファイル/10万行 ≤ 30秒
+- 効率的なアルゴリズムを使用
+- 不要な再計算を避ける
+description:
+globs:
+alwaysApply: false
+---

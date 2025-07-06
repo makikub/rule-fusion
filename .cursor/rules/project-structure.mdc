@@ -1,0 +1,31 @@
+# RuleFusion プロジェクト構造ガイド
+
+## プロジェクト概要
+RuleFusionは複数のAIコーディング支援ツール（GitHub Copilot、Cursor、Claude Code）のルールファイルを静的解析するツールです。
+
+## 主要エントリーポイント
+- [src/cli.ts](mdc:src/cli.ts) - CLIのメインエントリーポイント
+- [src/index.ts](mdc:src/index.ts) - ライブラリのエクスポート
+- [src/engines/static-engine.ts](mdc:src/engines/static-engine.ts) - 静的解析エンジン
+
+## コアコンポーネント
+- **ConfigParser** ([src/core/config-parser.ts](mdc:src/core/config-parser.ts)) - 設定ファイル解析
+- **FileDetector** ([src/core/file-detector.ts](mdc:src/core/file-detector.ts)) - ファイル検出
+- **StaticEngine** ([src/engines/static-engine.ts](mdc:src/engines/static-engine.ts)) - 静的解析実行
+- **FileParser** ([src/utils/file-parser.ts](mdc:src/utils/file-parser.ts)) - ファイル解析
+- **ConsoleReporter** ([src/reporters/console-reporter.ts](mdc:src/reporters/console-reporter.ts)) - 結果レポート
+
+## MVP要件
+- F-01: ファイル検出（実装済み）
+- F-02: スキーマ検証（構文解析のみ、AJV未実装）
+- F-03: 齟齬判定（4つのルール実装済み）
+- F-04: レポート（実装済み）
+- F-05: 設定読込（実装済み）
+
+## 設定ファイル
+- [.rulefusion.yml](mdc:.rulefusion.yml) - プロジェクト設定
+- [examples/.cursor/rules.md](mdc:examples/.cursor/rules.md) - サンプルルール
+description:
+globs:
+alwaysApply: false
+---

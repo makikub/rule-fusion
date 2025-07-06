@@ -1,0 +1,47 @@
+# ファイル解析ガイド
+
+## サポート形式
+[src/utils/file-parser.ts](mdc:src/utils/file-parser.ts)で以下の形式をサポート：
+
+### YAML (.yml, .yaml)
+- `js-yaml`ライブラリを使用
+- 構文エラーの検出
+- ネストしたオブジェクトの解析
+
+### JSON (.json)
+- 標準`JSON.parse()`を使用
+- 構文エラーの検出
+- スキーマ検証は未実装（AJV要追加）
+
+### Markdown (.md, .markdown)
+- カスタムパーサー実装
+- Front-matter（YAML）の解析
+- H2見出し（`## `）によるセクション分割
+- 箇条書き（`- `, `* `）のキー・バリュー抽出
+
+## ファイル検出
+[src/core/file-detector.ts](mdc:src/core/file-detector.ts)で実装：
+
+### グロブパターン
+- `glob`ライブラリを使用
+- 設定ファイルの`include`パターンで指定
+- `minimatch`で除外パターン処理
+
+### ツール別分類
+- `tool`プロパティでAIツールを識別
+- `type`プロパティでファイル形式を識別
+
+## 改善が必要な点
+1. **AJVスキーマ検証の追加**
+2. **より詳細なエラー位置情報**
+3. **Markdownパーサーの強化**
+4. **パフォーマンス最適化**
+
+## エラーハンドリング
+- パースエラーは`RuleViolation`として報告
+- ファイル読み込みエラーも適切に処理
+- ユーザーフレンドリーなエラーメッセージ
+description:
+globs:
+alwaysApply: false
+---
