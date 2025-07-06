@@ -100,20 +100,56 @@ export class FileParser {
     }
   }
 
-
   private parseMarkdownSection(content: string): any {
     const lines = content.split('\n').filter(line => line.trim());
     const rules: { [key: string]: any } = {};
 
+    let inCodeBlock = false;
+    let inDocumentation = false;
+    let inSettingsSection = false;
+
     for (const line of lines) {
       const trimmed = line.trim();
-      if (trimmed.startsWith('-') || trimmed.startsWith('*')) {
+      
+      // コードブロックの開始/終了を検出
+      if (trimmed.startsWith('```')) {
+        inCodeBlock = !inCodeBlock;
+        continue;
+      }
+
+      // コードブロック内はスキップ
+      if (inCodeBlock) {
+        continue;
+      }
+
+      // 設定セクションの検出
+      if (trimmed.toLowerCase().includes('settings') || 
+          trimmed.toLowerCase().includes('configuration') ||
+          trimmed.toLowerCase().includes('rules')) {
+        inSettingsSection = true;
+        inDocumentation = false;
+        continue;
+      }
+
+      // ドキュメントセクションの検出（例：## で始まる行の後）
+      if (trimmed.startsWith('## ') || trimmed.startsWith('#')) {
+        inDocumentation = true;
+        inSettingsSection = false;
+        continue;
+      }
+
+      // 設定セクション内の実際の設定項目のみを解析
+      if (inSettingsSection && (trimmed.startsWith('-') || trimmed.startsWith('*'))) {
         const ruleText = trimmed.substring(1).trim();
         const colonIndex = ruleText.indexOf(':');
         if (colonIndex > 0) {
           const key = ruleText.substring(0, colonIndex).trim();
           const value = ruleText.substring(colonIndex + 1).trim();
-          rules[key] = value;
+          
+          // 例示的な値（${variable}形式）は除外
+          if (!value.includes('${') || value.match(/^\$\{[^}]+\}$/)) {
+            rules[key] = value;
+          }
         }
       }
     }
